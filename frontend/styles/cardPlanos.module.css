@@ -1,0 +1,71 @@
+.title {
+  font-weight: bold;
+  word-wrap: normal;
+  width: 550px;
+  text-align: center;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 32%;
+  /* height: 767px; */
+  padding: 1rem;
+  /* border: 10px solid #cecdd2; */
+  background-color: #f5f5f5;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 9px 0px;
+  border-radius: 24px;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  -ms-border-radius: 24px;
+  -o-border-radius: 24px;
+}
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.36) 0px 15px 19px 0px;
+}
+.cardHeader {
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 9px 0px;
+  border-radius: 18px !important;
+  -webkit-border-radius: 18px !important;
+  -moz-border-radius: 18px !important;
+  -ms-border-radius: 18px !important;
+  -o-border-radius: 18px !important;
+}
+.cardBody {
+  padding: 1rem;
+  width: 100%;
+}
+.cardText {
+  font-size: 0.8rem;
+}
+.item {
+  font-size: 18px;
+
+  list-style: none;
+
+  text-align: left;
+
+  display: flex;
+
+  align-items: center;
+}
+.item p {
+  margin-left: 10px;
+  margin: auto 0;
+
+  display: flex;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.icon {
+  display: flex;
+}

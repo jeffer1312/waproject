@@ -1,0 +1,1 @@
+docker run --name waprojectDb -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=waproject  --restart always -p 3306:3306 -d mysql:latest 

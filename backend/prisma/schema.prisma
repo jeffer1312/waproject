@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Subscriber {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  Order     Order[]
+
+  @@map("subscribers")
+}
+
+model Plan {
+  id                String   @id @default(cuid())
+  name              String
+  description       String   @db.LongText()
+  priceOneMonth     Float
+  priceThreeMonths  Float
+  priceTwelveMonths Float
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now())
+  Order             Order[]
+
+  @@map("plans")
+}
+
+model Order {
+  id           String     @id @default(cuid())
+  subscriber   Subscriber @relation(fields: [subscriberId], references: [id])
+  subscriberId String
+  plan         Plan       @relation(fields: [planId], references: [id])
+  planId       String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @default(now())
+  months       Int
+
+  @@map("orders")
+}
