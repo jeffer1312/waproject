@@ -4,10 +4,33 @@ import Image from 'next/image';
 import styles from '../styles/Planos.module.css';
 import { useSubscriberContext } from '../src/context/Subscriber/SubscriberContext';
 import CardPlanos from '../src/components/Card';
+import BoxCard from '../src/components/BoxCard';
 import { Button, Container } from 'reactstrap';
-import { planos } from '../src/Constantes';
+import { coRotaPlanos } from '../src/Constantes';
+import { useCallback, useEffect, useState } from 'react';
+import { api } from '../src/services/api';
+import { TPlans } from '../src/types';
 const Planos: NextPage = () => {
   const { inscrito } = useSubscriberContext();
+  const [mostrarSectionAssinar, setMostrarSectionAssinar] = useState(false);
+  const [planos, setPlanos] = useState<Array<TPlans>>([]);
+
+  const handleAssinar = () => {
+    setMostrarSectionAssinar(!mostrarSectionAssinar);
+  };
+
+  const LoadPlanos = useCallback(async () => {
+    const res = await api.get(`${coRotaPlanos}`);
+    if (res.data) {
+      console.log(res.data);
+      setPlanos(res.data);
+    }
+  }, []);
+
+  useEffect(() => {
+    LoadPlanos();
+  }, []);
+
   return (
     <>
       <Head>
@@ -25,21 +48,47 @@ const Planos: NextPage = () => {
         </div>
       </header>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>COMPARE OS PLANOS DE ASSINATURA</h1>
-        <Container className={styles.container}>
-          {planos.map(plano => (
-            <CardPlanos key={plano.id} {...plano} />
-          ))}
-
-          {/* botao para assinar os planos */}
-        </Container>
-        <div className={styles.buttonContainer}>
-          <Button type='submit' className={styles.buttonVerPlanos}>
-            <span>Veja os planos de assinatura disponíveis</span>
-          </Button>
-        </div>
-      </main>
+      {!mostrarSectionAssinar ? (
+        <section className={styles.sectionComparar}>
+          <h1 className={styles.title}>COMPARE OS PLANOS DE ASSINATURA</h1>
+          <Container className={styles.container}>
+            {planos.map((plano, index) => (
+              <CardPlanos index={index} key={plano.id} {...plano} />
+            ))}
+          </Container>
+          <div className={styles.buttonContainer}>
+            <Button
+              onClick={() => {
+                handleAssinar();
+              }}
+              className={styles.buttonVerPlanos}
+            >
+              <span>Veja os planos de assinatura disponíveis</span>
+            </Button>
+          </div>
+        </section>
+      ) : (
+        <section className={styles.assinar}>
+          <h1 className={styles.title}>ESCOLHA SEU PLANO DE ASSINATURA</h1>
+          <span>
+            Escolha entre três novas opções de assinatura para obter os jogos e
+            os benefícios desejados.
+          </span>
+          <Container className={styles.container}>
+            <BoxCard planos={planos} />
+          </Container>
+          <div className={styles.buttonContainer}>
+            <Button
+              onClick={() => {
+                handleAssinar();
+              }}
+              className={styles.buttonVerPlanos}
+            >
+              <span>Comparar os Planos</span>
+            </Button>
+          </div>
+        </section>
+      )}
     </>
   );
 };

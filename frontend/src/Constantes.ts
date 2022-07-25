@@ -4,35 +4,7 @@ export const coRotaPlanos = '/plans'; // post: cadastrar plano , get: listar pla
 export const coRotaInscrito = '/subscribers'; // post: cadastrar inscritos , get: listar incritos
 export const coRotaPedidos = '/orders'; // post: cadastrar pedidos , get: listar pedidos
 
-export type TPlans = {
-  id?: string;
-  name: string;
-  description: string;
-  priceOneMonth: number;
-  priceThreeMonths: number;
-  priceTwelveMonths: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-};
-
-export type TSubscriber = {
-  id?: string;
-  name: string;
-  email: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-};
-
-export type TOrder = {
-  id?: string;
-  months: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  planId: string;
-  subscriberId: string;
-};
-
-export const planos = [
+export const data = [
   {
     id: 1,
 
@@ -45,7 +17,7 @@ export const planos = [
       },
       {
         src: '/assets/asset 12.svg',
-        text: ' Modo multijogador online',
+        text: 'Modo multijogador online',
       },
 
       {
@@ -78,7 +50,7 @@ export const planos = [
       },
       {
         src: '/assets/asset 28.svg',
-        text: 'Ubisoft+ ClassicsCatálogo de clássicos',
+        text: 'Ubisoft+ Classics',
       },
       {
         src: '/assets/asset 30.svg',
@@ -102,7 +74,7 @@ export const planos = [
       },
       {
         src: '/assets/asset 12.svg',
-        text: ' Modo multijogador online',
+        text: 'Modo multijogador online',
       },
 
       {
@@ -135,7 +107,7 @@ export const planos = [
       },
       {
         src: '/assets/asset 28.svg',
-        text: 'Ubisoft+ ClassicsCatálogo de clássicos',
+        text: 'Ubisoft+ Classics',
       },
     ],
   },
@@ -151,7 +123,7 @@ export const planos = [
       },
       {
         src: '/assets/asset 12.svg',
-        text: ' Modo multijogador online',
+        text: 'Modo multijogador online',
       },
 
       {

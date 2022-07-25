@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { TSubscriber } from '../../Constantes';
+import { TSubscriber } from '../../types';
 
 type SubscriberContextType = {
   handleChangeInscrito: (value: TSubscriber) => void;
@@ -16,6 +16,25 @@ const SubscriberContext = createContext({} as SubscriberContextType);
 const SubscriberProvider: React.FC<IProps> = ({ children }) => {
   const [inscrito, setInscrito] = useState<TSubscriber>();
 
+  // Local Storage: setting & getting data
+  useEffect(() => {
+    const incritoStorage = localStorage.getItem('inscrito');
+
+    if (incritoStorage) {
+      let incritoData = JSON.parse(incritoStorage);
+      console.log('incritoStorage', incritoData);
+      if (incritoData !== '' || incritoData !== null) {
+        setInscrito(incritoData);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (inscrito) {
+      localStorage.setItem('inscrito', JSON.stringify(inscrito));
+    }
+  }, [inscrito]);
+
   const handleChangeInscrito = (value: TSubscriber) => {
     console.log('ta passando:?');
     setInscrito(value);
@@ -29,8 +48,7 @@ const SubscriberProvider: React.FC<IProps> = ({ children }) => {
 };
 
 export function useSubscriberContext() {
-  const context = useContext(SubscriberContext);
-  const { handleChangeInscrito, inscrito } = context;
+  const { handleChangeInscrito, inscrito } = useContext(SubscriberContext);
   return { handleChangeInscrito, inscrito };
 }
 

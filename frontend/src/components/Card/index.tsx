@@ -11,16 +11,22 @@ import {
   List,
 } from 'reactstrap';
 import styles from '../../../styles/cardPlanos.module.css';
+import { data } from '../../Constantes';
 type TItens = {
   src: string;
   text: string;
 };
 
 type TPlanosProps = {
-  id: number;
-  nome: string;
-  title: string;
-  itens: Array<TItens>;
+  id?: string;
+  name?: string;
+  index: number;
+  description?: string;
+  priceOneMonth?: number;
+  priceThreeMonths?: number;
+  priceTwelveMonths?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 const CardPlanos = (plano: TPlanosProps) => {
   return (
@@ -28,9 +34,9 @@ const CardPlanos = (plano: TPlanosProps) => {
       <Card className={styles.card}>
         <CardHeader
           style={
-            plano.id === 1
+            plano.index === 0
               ? { backgroundColor: '#1f1f1f', color: '#fcc000' }
-              : plano.id === 2
+              : plano.index === 1
               ? { backgroundColor: '#fcc000', color: '#1f1f1f' }
               : { backgroundColor: '#ffff', color: '#1f1f1f' }
           }
@@ -38,20 +44,20 @@ const CardPlanos = (plano: TPlanosProps) => {
         >
           <CardTitle className={styles.cardTitle}>
             <h2>
-              <b>{plano?.nome?.toUpperCase()}</b>
+              <b>{plano?.name?.toUpperCase()}</b>
             </h2>
             <CardText
-              style={plano.id === 1 ? { color: '#ccc' } : { color: '#000' }}
+              style={plano.index === 0 ? { color: '#ccc' } : { color: '#000' }}
               className={styles.cardText}
             >
-              {plano?.title}
+              {data[plano.index].title}
             </CardText>
           </CardTitle>
         </CardHeader>
         <CardBody className={styles.cardBody}>
           <ul className={styles.list}>
-            {plano?.itens?.map(item => (
-              <li className={styles.item}>
+            {data[plano?.index].itens.map((item, index) => (
+              <li key={index} className={styles.item}>
                 <Image src={item?.src} width='40px' height={'40px'}></Image>
 
                 <p>{item?.text}</p>

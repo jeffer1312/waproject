@@ -1,0 +1,176 @@
+.tab {
+  border: 0;
+}
+.navItem {
+  width: 30%;
+
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 9px 0px;
+  border-radius: 18px !important;
+  -webkit-border-radius: 18px !important;
+  -moz-border-radius: 18px !important;
+  -ms-border-radius: 18px !important;
+  -o-border-radius: 18px !important;
+
+  display: flex;
+  padding: 1rem;
+
+  margin: 0.5rem;
+  z-index: 2;
+  align-items: center;
+  outline: 3px solid #fff;
+  outline-offset: 1px;
+}
+.navItem:hover {
+  outline: 3px solid rgb(17, 104, 198);
+  outline-offset: 1px;
+}
+.navItemActive {
+  width: 30%;
+
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 9px 0px;
+  border-radius: 18px !important;
+  -webkit-border-radius: 18px !important;
+  -moz-border-radius: 18px !important;
+  -ms-border-radius: 18px !important;
+  -o-border-radius: 18px !important;
+
+  display: flex;
+  padding: 1rem;
+
+  margin: 0.5rem;
+  z-index: 2;
+  align-items: center;
+
+  outline: 3px solid rgb(17, 104, 198);
+  outline-offset: 1px;
+}
+.cardTitle {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  border-radius: 8px;
+
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+.cardText {
+  font-size: 0.8rem;
+}
+.tabContent {
+  width: 80vw;
+  padding-top: 1rem;
+}
+.tabPane {
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+  /* height: 767px; */
+  padding: 1rem;
+  margin-bottom: 2rem;
+  /* border: 10px solid #cecdd2; */
+  background-color: #f5f7fa;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 9px 0px;
+  border-radius: 24px;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  -ms-border-radius: 24px;
+  -o-border-radius: 24px;
+}
+.valores {
+  width: 30%;
+  border-radius: 10px;
+  background-color: #fff;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.valores span {
+  padding: 1rem;
+}
+.checkBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.descricao {
+  width: 60%;
+  padding: 2rem;
+}
+.input > input:checked {
+  border: 1px solid red;
+  background-color: #6b6b6b;
+  opacity: 10%;
+}
+.inputAtivo {
+  background-color: #6b6b6b;
+  opacity: 10%;
+  color: #000;
+}
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.36) 0px 15px 19px 0px;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.header p {
+  width: 70%;
+  font-size: 18px;
+  line-height: 27px;
+  text-align: start;
+  letter-spacing: 0.1px;
+}
+
+.item {
+  font-size: 18px;
+  list-style: none;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+.itemInfo {
+  font-size: 14px;
+  list-style: none;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+.item p {
+  margin-left: 5px;
+  margin: auto 0;
+
+  display: flex;
+}
+.info {
+  padding-top: 2rem;
+}
+.info b {
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.items {
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  grid-template-columns: repeat(3, auto);
+  display: grid;
+  max-width: 100%;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  grid-gap: 0.3rem 5rem;
+}
