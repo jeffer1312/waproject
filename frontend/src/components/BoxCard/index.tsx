@@ -1,7 +1,7 @@
 // criar componetne de card de assinatura
 
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardBody,
@@ -22,15 +22,40 @@ import {
   Label,
 } from 'reactstrap';
 import styles from '../../../styles/boxCard.module.css';
-import { data } from '../../Constantes';
+import { coRotaPedidos, data } from '../../Constantes';
+import { useSubscriberContext } from '../../context/Subscriber/SubscriberContext';
+import { api } from '../../services/api';
 
 import { TPlans } from '../../types';
 
 type BoxCardProps = {
   planos: Array<TPlans>;
 };
+type TOrderPost = {
+  months: number;
+  planId: string;
+  subscriberId: string;
+};
 const BoxCard = ({ planos }: BoxCardProps) => {
   const [activeTab, setActiveTab] = React.useState<string>(planos[0].id);
+  const [months, setMonths] = useState<number>(0);
+  const { inscrito } = useSubscriberContext();
+
+  const handlePostOrder = async () => {
+    if (months > 0) {
+      const order: TOrderPost = {
+        months,
+        planId: activeTab,
+        subscriberId: inscrito ? inscrito.id : '',
+      };
+
+      const res = await api.post(coRotaPedidos, order);
+
+      console.log(res);
+    } else {
+      alert('Selecione um valor');
+    }
+  };
 
   return (
     <>
@@ -47,6 +72,7 @@ const BoxCard = ({ planos }: BoxCardProps) => {
               }
               onClick={() => {
                 setActiveTab(plano.id);
+                setMonths(0);
               }}
               className={
                 activeTab === plano.id ? styles.navItemActive : styles.navItem
@@ -235,33 +261,80 @@ const BoxCard = ({ planos }: BoxCardProps) => {
                   <span>Escolha um plano de assinatura</span>
 
                   <div className={styles.checkBox}>
-                    <FormGroup className={styles.input} check>
-                      <Input type='radio' name='opcao' value={1} /> Assinatura
-                      de um mês
-                      <br />
-                      <b>
-                        R$
-                        {plano?.priceOneMonth}
-                      </b>
-                    </FormGroup>
-                    <FormGroup className={styles.input} check>
-                      <Input value={3} name='opcao' type='radio' /> Assinatura
-                      de um mês
-                      <br />
-                      <b>
-                        R$
-                        {plano?.priceThreeMonths}
-                      </b>
-                    </FormGroup>
-                    <FormGroup className={styles.input} check>
-                      <Input value={12} name='opcao' type='radio' /> Assinatura
-                      de um mês
-                      <br />
-                      <b>
-                        R$
-                        {plano?.priceTwelveMonths}
-                      </b>
-                    </FormGroup>
+                    <div>
+                      <label className={styles.radlabel}>
+                        <input
+                          type='radio'
+                          className={styles.radinput}
+                          name='rad'
+                          onChange={e =>
+                            setMonths(parseInt(e.target.value.toString()))
+                          }
+                          value={1}
+                        />
+
+                        <div className={styles.raddesign} />
+                        <div className={styles.radtext}>
+                          {' '}
+                          Assinatura de um mês
+                          <br />
+                          <b>
+                            R$
+                            {plano?.priceOneMonth}
+                          </b>
+                        </div>
+                      </label>
+                      <label className={styles.radlabel}>
+                        <input
+                          type='radio'
+                          className={styles.radinput}
+                          name='rad'
+                          value={3}
+                          onChange={e =>
+                            setMonths(parseInt(e.target.value.toString()))
+                          }
+                        />
+                        <div className={styles.raddesign} />
+                        <div className={styles.radtext}>
+                          Assinatura de 3 meses
+                          <br />
+                          <b>
+                            R$
+                            {plano?.priceThreeMonths}
+                          </b>
+                        </div>
+                      </label>
+                      <label className={styles.radlabel}>
+                        <input
+                          type='radio'
+                          className={styles.radinput}
+                          name='rad'
+                          value={12}
+                          onChange={e =>
+                            setMonths(parseInt(e.target.value.toString()))
+                          }
+                        />
+                        <div className={styles.raddesign} />
+                        <div className={styles.radtext}>
+                          Assinatura de 12 meses
+                          <br />
+                          <b>
+                            R$
+                            {plano?.priceTwelveMonths}
+                          </b>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                  <div className={styles.buttonContainer}>
+                    <Button
+                      onClick={() => {
+                        handlePostOrder();
+                      }}
+                      className={styles.buttonVerPlanos}
+                    >
+                      <span>Assinar</span>
+                    </Button>
                   </div>
                 </div>
               </Card>

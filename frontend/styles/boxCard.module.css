@@ -108,16 +108,7 @@
   width: 60%;
   padding: 2rem;
 }
-.input > input:checked {
-  border: 1px solid red;
-  background-color: #6b6b6b;
-  opacity: 10%;
-}
-.inputAtivo {
-  background-color: #6b6b6b;
-  opacity: 10%;
-  color: #000;
-}
+
 .card:hover {
   box-shadow: rgba(0, 0, 0, 0.36) 0px 15px 19px 0px;
 }
@@ -173,4 +164,102 @@
   width: -moz-max-content;
   width: max-content;
   grid-gap: 0.3rem 5rem;
+}
+
+.radlabel {
+  display: flex;
+  align-items: center;
+
+  border-radius: 100px;
+  padding: 14px 16px;
+  margin: 10px 0;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.radlabel:hover,
+.radlabel:focus-within {
+  background: hsla(0, 0%, 80%, 0.14);
+}
+
+.radinput {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  z-index: -1;
+}
+
+.raddesign {
+  width: 22px;
+  height: 22px;
+  border-radius: 100px;
+
+  background: linear-gradient(to right bottom, #fcc000, hsl(0, 7%, 20%));
+  position: relative;
+}
+
+.raddesign::before {
+  content: '';
+  display: inline-block;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  background: hsl(0, 0%, 90%);
+  transform: scale(1.1);
+  transition: 0.3s;
+  -webkit-border-radius: inherit;
+  -moz-border-radius: inherit;
+  -ms-border-radius: inherit;
+  -o-border-radius: inherit;
+}
+
+.radinput:checked + .raddesign::before {
+  transform: scale(0);
+}
+
+.radtext {
+  margin-left: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 900;
+
+  transition: 0.3s;
+}
+
+.radinput:checked ~ .radtext {
+  color: hsl(0, 0%, 40%);
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5rem;
+}
+
+.buttonVerPlanos {
+  background-color: #2d64e6;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  border-radius: 22px;
+  -webkit-border-radius: 22px;
+  -moz-border-radius: 22px;
+  -ms-border-radius: 22px;
+  -o-border-radius: 22px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: -50px 2px;
+  cursor: pointer;
+}
+.buttonVerPlanos:hover {
+  background-color: #0d7fdd;
 }

@@ -2,7 +2,7 @@ export const coEnderecoApi = 'http://localhost:3333';
 
 export const coRotaPlanos = '/plans'; // post: cadastrar plano , get: listar planos
 export const coRotaInscrito = '/subscribers'; // post: cadastrar inscritos , get: listar incritos
-export const coRotaPedidos = '/orders'; // post: cadastrar pedidos , get: listar pedidos
+export const coRotaPedidos = '/order'; // post: cadastrar pedidos , get: listar pedidos
 
 export const data = [
   {

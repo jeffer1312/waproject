@@ -8,6 +8,7 @@ import { api } from '../src/services/api';
 import { coRotaInscrito } from '../src/Constantes';
 import { useSubscriberContext } from '../src/context/Subscriber/SubscriberContext';
 import Router from 'next/router';
+import { TSubscriber } from '../src/types';
 
 const Home: NextPage = () => {
   const [erro, setErro] = useState({ show: false, msg: '' });
@@ -23,7 +24,8 @@ const Home: NextPage = () => {
         const res = await api.post(`${coRotaInscrito}`, { name, email });
 
         if (res.status === 201) {
-          handleChangeInscrito({ name, email });
+          const data: TSubscriber = res.data;
+          handleChangeInscrito(data);
 
           Router.push('/Planos');
         }
