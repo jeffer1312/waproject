@@ -88,8 +88,6 @@ Agora, abre a página da aplicação frontend em `http://localhost:3000`. E pron
 
 
 
-Viewport
-Window
 ×
 ×
 ×
