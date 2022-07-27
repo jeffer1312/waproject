@@ -12,10 +12,6 @@
 
 ## Testando a Aplicação no Postman:
 
- '/plans'
- '/subscribers'
-'/order'
-
 Caso queira testar as API' criadas no projeto, primeiro baixe o [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop).
 Depois de realizar o download do Postman, basta agora realizar os passos abaiaxo para 
 poder testar cada API criada!
