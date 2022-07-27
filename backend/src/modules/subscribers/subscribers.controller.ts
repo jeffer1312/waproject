@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   Res,
+  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
@@ -40,7 +41,7 @@ export class SubscribersController {
     return this.subscribersService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiOperation({ description: 'Atualizar Inscrito' })
   @ApiTags('Inscritos')
   update(@Param('id') id: string, @Body() updateSubscriberDto: SubscriberDTO) {

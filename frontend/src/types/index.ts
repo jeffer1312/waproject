@@ -25,3 +25,21 @@ export type TOrder = {
   planId: string;
   subscriberId: string;
 };
+export type TOrderPUT = {
+  id: string;
+  months: number;
+  plan: Tplan;
+};
+export type TInscritoPedido = {
+  Order: Array<TOrderPUT>;
+  email: string;
+  id: string;
+  name: string;
+};
+type Tplan = {
+  id: string;
+  name: string;
+  priceOneMonth: number;
+  priceThreeMonths: number;
+  priceTwelveMonths: number;
+};

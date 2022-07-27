@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { PlansDto } from './Plans.dto';
@@ -36,7 +37,7 @@ export class PlansController {
     return this.plansService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiOperation({ description: 'Atualizar Plano de assinatura' })
   @ApiTags('Planos')
   update(@Param('id') id: string, @Body() updatePlansDto: PlansDto) {

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { OrderDTO } from './Order.DTO';
@@ -36,7 +37,7 @@ export class OrderController {
     return this.orderService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiTags('Pedidos')
   @ApiOperation({ description: 'Atualizar Pedido' })
   update(@Param('id') id: string, @Body() updateOrderDto: OrderDTO) {

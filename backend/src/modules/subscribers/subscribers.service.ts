@@ -15,7 +15,9 @@ export class SubscribersService {
     });
 
     if (ExistSubscriber) {
-      return res.status(403).send({ erro: 'Email já cadastrado' });
+      return res
+        .status(403)
+        .send({ erro: 'Email já cadastrado', ExistSubscriber });
     }
 
     const Subscriber = await this.prisma.subscriber.create({
@@ -31,6 +33,27 @@ export class SubscribersService {
   }
   async findOne(id: string) {
     const Subscriber = await this.prisma.subscriber.findFirst({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+
+        Order: {
+          select: {
+            id: true,
+            months: true,
+            plan: {
+              select: {
+                id: true,
+                name: true,
+                priceOneMonth: true,
+                priceThreeMonths: true,
+                priceTwelveMonths: true,
+              },
+            },
+          },
+        },
+      },
       where: {
         id,
       },

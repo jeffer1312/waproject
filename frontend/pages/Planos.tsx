@@ -6,19 +6,33 @@ import { useSubscriberContext } from '../src/context/Subscriber/SubscriberContex
 import CardPlanos from '../src/components/Card';
 import BoxCard from '../src/components/BoxCard';
 import { Button, Container } from 'reactstrap';
-import { coRotaPlanos } from '../src/Constantes';
+import { coRotaInscrito, coRotaPlanos } from '../src/Constantes';
 import { useCallback, useEffect, useState } from 'react';
 import { api } from '../src/services/api';
-import { TPlans } from '../src/types';
+import { TInscritoPedido, TPlans } from '../src/types';
 const Planos: NextPage = () => {
   const { inscrito } = useSubscriberContext();
   const [mostrarSectionAssinar, setMostrarSectionAssinar] = useState(false);
+  const [Order, setOrder] = useState<TInscritoPedido>();
   const [planos, setPlanos] = useState<Array<TPlans>>([]);
 
   const handleAssinar = () => {
     setMostrarSectionAssinar(!mostrarSectionAssinar);
   };
 
+  const LoadInscritoOrder = useCallback(async () => {
+    //@ts-ignore
+
+    const res = await api.get(`${coRotaInscrito}/${inscrito?.id}`);
+
+    if (res.data) {
+      setOrder(res.data);
+    }
+  }, [inscrito]);
+
+  useEffect(() => {
+    LoadInscritoOrder();
+  }, [LoadInscritoOrder]);
   const LoadPlanos = useCallback(async () => {
     const res = await api.get(`${coRotaPlanos}`);
     if (res.data) {
@@ -29,8 +43,13 @@ const Planos: NextPage = () => {
 
   useEffect(() => {
     LoadPlanos();
-  }, []);
+  }, [LoadPlanos]);
 
+  useEffect(() => {
+    if (Order?.Order[0]?.plan.id) {
+      setMostrarSectionAssinar(true);
+    }
+  }, [Order]);
   return (
     <>
       <Head>
@@ -75,7 +94,7 @@ const Planos: NextPage = () => {
             os benefícios desejados.
           </span>
           <Container className={styles.container}>
-            <BoxCard planos={planos} />
+            <BoxCard planos={planos} Order={Order} />
           </Container>
           <div className={styles.buttonContainer}>
             <Button

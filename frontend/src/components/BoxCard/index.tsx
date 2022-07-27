@@ -1,7 +1,7 @@
 // criar componetne de card de assinatura
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardBody,
@@ -26,18 +26,24 @@ import { coRotaPedidos, data } from '../../Constantes';
 import { useSubscriberContext } from '../../context/Subscriber/SubscriberContext';
 import { api } from '../../services/api';
 
-import { TPlans } from '../../types';
+import { TPlans, TInscritoPedido } from '../../types';
 
 type BoxCardProps = {
   planos: Array<TPlans>;
+  Order?: TInscritoPedido;
 };
 type TOrderPost = {
   months: number;
   planId: string;
   subscriberId: string;
 };
-const BoxCard = ({ planos }: BoxCardProps) => {
-  const [activeTab, setActiveTab] = React.useState<string>(planos[0].id);
+const BoxCard = ({ planos, Order }: BoxCardProps) => {
+  const inputRefOneMonth = React.useRef<HTMLInputElement>(null);
+  const inputRefTreeMoths = React.useRef<HTMLInputElement>(null);
+  const inputRefTwelveMoths = React.useRef<HTMLInputElement>(null);
+  const [activeTab, setActiveTab] = useState<string>(
+    Order?.Order[0]?.plan?.id ? Order?.Order[0]?.plan?.id : planos[0]?.id
+  );
   const [months, setMonths] = useState<number>(0);
   const { inscrito } = useSubscriberContext();
 
@@ -49,13 +55,31 @@ const BoxCard = ({ planos }: BoxCardProps) => {
         subscriberId: inscrito ? inscrito.id : '',
       };
 
-      const res = await api.post(coRotaPedidos, order);
-
-      console.log(res);
+      if (Order?.Order[0]?.plan?.id) {
+        await api.put(`${coRotaPedidos}/${Order?.Order[0]?.id}`, order);
+      } else {
+        const res = await api.post(coRotaPedidos, order);
+        console.log(res);
+      }
     } else {
       alert('Selecione um valor');
     }
   };
+
+  useEffect(() => {
+    if (Order?.Order[0]?.months) {
+      if (Order?.Order[0]?.months === 1) {
+        //@ts-ignore
+        inputRefOneMonth.current.checked = true;
+      } else if (Order?.Order[0]?.months === 3) {
+        //@ts-ignore
+        inputRefTreeMoths.current.checked = true;
+      } else if (Order?.Order[0]?.months === 12) {
+        //@ts-ignore
+        inputRefTwelveMoths.current.checked = true;
+      }
+    }
+  }, [Order, activeTab]);
 
   return (
     <>
@@ -64,15 +88,14 @@ const BoxCard = ({ planos }: BoxCardProps) => {
           {planos?.map((plano, index) => (
             <NavItem
               style={
-                index === 0
-                  ? { backgroundColor: '#1f1f1f', color: '#fcc000' }
-                  : index === 1
-                  ? { backgroundColor: '#fcc000', color: '#1f1f1f' }
-                  : { backgroundColor: '#ffff', color: '#1f1f1f' }
+                plano?.name?.toUpperCase().includes('DELUXE')
+                  ? { backgroundColor: '#1f1f1f', color: '#fcc000', order: 1 }
+                  : plano?.name?.toUpperCase().includes('EXTRA')
+                  ? { backgroundColor: '#fcc000', color: '#1f1f1f', order: 2 }
+                  : { backgroundColor: '#ffff', color: '#1f1f1f', order: 3 }
               }
               onClick={() => {
                 setActiveTab(plano.id);
-                setMonths(0);
               }}
               className={
                 activeTab === plano.id ? styles.navItemActive : styles.navItem
@@ -83,7 +106,11 @@ const BoxCard = ({ planos }: BoxCardProps) => {
                   <b>{plano?.name?.toUpperCase()}</b>
                 </h2>
                 <CardText
-                  style={index === 0 ? { color: '#ccc' } : { color: '#000' }}
+                  style={
+                    plano?.name?.toUpperCase().includes('DELUXE')
+                      ? { color: '#ccc' }
+                      : { color: '#000' }
+                  }
                   className={styles.cardText}
                 >
                   {data[index]?.title}
@@ -101,7 +128,7 @@ const BoxCard = ({ planos }: BoxCardProps) => {
                     <h1>{plano.name}</h1>
                     <p>{plano.description}</p>
                   </div>
-                  {index === 0 ? (
+                  {plano?.name?.toUpperCase().includes('DELUXE') ? (
                     <>
                       <li className={styles.item}>
                         <Image
@@ -122,7 +149,7 @@ const BoxCard = ({ planos }: BoxCardProps) => {
                         <p>Avaliações de jogos</p>
                       </li>{' '}
                     </>
-                  ) : index === 1 ? (
+                  ) : plano?.name?.toUpperCase().includes('EXTRA') ? (
                     <>
                       <li className={styles.item}>
                         <Image
@@ -177,9 +204,9 @@ const BoxCard = ({ planos }: BoxCardProps) => {
 
                   <div className={styles.info}>
                     <b>{` ${plano.name} também inclui:`}</b> <br />
-                    {index === 0 ? (
+                    {plano?.name?.toUpperCase().includes('DELUXE') ? (
                       <div className={styles.items}>
-                        {data[index].itens
+                        {data[0]?.itens
                           .filter(
                             item =>
                               item.text.toUpperCase() !==
@@ -202,9 +229,9 @@ const BoxCard = ({ planos }: BoxCardProps) => {
                             </>
                           ))}
                       </div>
-                    ) : index === 1 ? (
+                    ) : plano?.name?.toUpperCase().includes('EXTRA') ? (
                       <div className={styles.items}>
-                        {data[index].itens
+                        {data[1]?.itens
                           .filter(
                             item =>
                               item.text.toUpperCase() !==
@@ -229,7 +256,7 @@ const BoxCard = ({ planos }: BoxCardProps) => {
                       </div>
                     ) : (
                       <div className={styles.items}>
-                        {data[index].itens
+                        {data[2]?.itens
                           .filter(
                             item =>
                               item.text.toUpperCase() !==
@@ -264,6 +291,7 @@ const BoxCard = ({ planos }: BoxCardProps) => {
                     <div>
                       <label className={styles.radlabel}>
                         <input
+                          ref={inputRefOneMonth}
                           type='radio'
                           className={styles.radinput}
                           name='rad'
@@ -286,6 +314,7 @@ const BoxCard = ({ planos }: BoxCardProps) => {
                       </label>
                       <label className={styles.radlabel}>
                         <input
+                          ref={inputRefTreeMoths}
                           type='radio'
                           className={styles.radinput}
                           name='rad'
@@ -306,6 +335,7 @@ const BoxCard = ({ planos }: BoxCardProps) => {
                       </label>
                       <label className={styles.radlabel}>
                         <input
+                          ref={inputRefTwelveMoths}
                           type='radio'
                           className={styles.radinput}
                           name='rad'

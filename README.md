@@ -63,7 +63,6 @@ instalar as dependências do backend, rodar migrations:
 ```bash
 cd ../backend
 yarn install
-yarn run build
 npx prisma migrate dev 
 ```
 

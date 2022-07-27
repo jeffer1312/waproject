@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import { Alert, Button, Form, InputGroup } from 'reactstrap';
 import styles from '../styles/Home.module.css';
 import { useForm } from 'react-hook-form';
 import { api } from '../src/services/api';
-import { coRotaInscrito } from '../src/Constantes';
+import { coRotaInscrito, coRotaPlanos } from '../src/Constantes';
 import { useSubscriberContext } from '../src/context/Subscriber/SubscriberContext';
 import Router from 'next/router';
 import { TSubscriber } from '../src/types';
+import Link from 'next/link';
 
 const Home: NextPage = () => {
   const [erro, setErro] = useState({ show: false, msg: '' });
@@ -30,13 +31,24 @@ const Home: NextPage = () => {
           Router.push('/Planos');
         }
       } catch (err) {
-        console.log(err);
-
         //@ts-ignore
         setErro({ show: true, msg: err?.response?.data?.erro });
+        //@ts-ignore
+        handleChangeInscrito(err?.response?.data?.ExistSubscriber);
       }
     }
   };
+
+  const loadPlanos = async () => {
+    const res = await api.get(`${coRotaPlanos}`);
+    if (res.data.length === 0) {
+      Router.push('/CadastrarPlanos');
+    }
+  };
+
+  useEffect(() => {
+    loadPlanos();
+  });
 
   return (
     <div className={styles.container}>
@@ -85,6 +97,7 @@ const Home: NextPage = () => {
             >
               <span className='alert-text  ml-1'>
                 <strong>{erro.msg}</strong>
+                <Link href={'/Planos'}>Deseja Alterar Plano</Link>
               </span>
             </Alert>
           )}
