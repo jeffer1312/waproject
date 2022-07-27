@@ -53,7 +53,7 @@ _Note_: se quiser mude MYSQL_DATABASE, MYSQL_PASSWORD, MYSQL_USER e MYSQL_ROOT_P
 
 ```bash
 docker run --name waprojectDb -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=waproject  --restart always -p 3306:3306 -d mysql:latest 
-
+```
 
 instalar as dependências do backend, rodar migrations:
 
