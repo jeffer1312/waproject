@@ -46,7 +46,10 @@ Para começar, você deve simplesmente clonar o repositório do projeto na sua m
 Antes de instalar as dependências no projeto, você precisa já ter instalado na sua máquina:
 
 * **Node.Js**: Caso não tenha, basta realizar o download [Aqui](https://nodejs.org/en/)
-* **mysql**: Utilizei docker pra rodar o mysql
+* **MYSQL**: Utilizei docker pra rodar o MYSQL
+* **Docker**: Caso não tenha, basta realizar o download [Aqui](https://www.docker.com/get-started/)
+
+_Note_:Caso nao queira utilizar docker e ja tenha instalado o banco de dados mysql troque as variaveis do arquivo .env pra conectar com o seu banco
 
 criar banco de dados Mysql usando docker:
 _Note_: se quiser mude MYSQL_DATABASE, MYSQL_PASSWORD, MYSQL_USER e MYSQL_ROOT_PASSWORD.
