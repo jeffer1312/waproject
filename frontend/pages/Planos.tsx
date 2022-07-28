@@ -36,7 +36,7 @@ const Planos: NextPage = () => {
   const LoadPlanos = useCallback(async () => {
     const res = await api.get(`${coRotaPlanos}`);
     if (res.data) {
-      console.log(res.data);
+   
       setPlanos(res.data);
     }
   }, []);

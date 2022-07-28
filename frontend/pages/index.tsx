@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   const handleSaveSubscriber = async (data: any) => {
     const { name, email } = data;
 
-    console.log(handleChangeInscrito);
+    
     if (name && email) {
       try {
         const res = await api.post(`${coRotaInscrito}`, { name, email });

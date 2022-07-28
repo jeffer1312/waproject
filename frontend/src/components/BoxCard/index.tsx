@@ -69,12 +69,18 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
   useEffect(() => {
     if (Order?.Order[0]?.months) {
       if (Order?.Order[0]?.months === 1) {
+        console.log('1');
+        console.log(inputRefOneMonth);
         //@ts-ignore
         inputRefOneMonth.current.checked = true;
       } else if (Order?.Order[0]?.months === 3) {
+        console.log('3');
+        console.log(inputRefTreeMoths);
         //@ts-ignore
         inputRefTreeMoths.current.checked = true;
       } else if (Order?.Order[0]?.months === 12) {
+        console.log('12');
+        console.log(inputRefTwelveMoths);
         //@ts-ignore
         inputRefTwelveMoths.current.checked = true;
       }
@@ -86,42 +92,49 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
       <div>
         <Nav className={styles.tab} tabs>
           {planos?.map((plano, index) => (
-            <NavItem
-              style={
-                plano?.name?.toUpperCase().includes('DELUXE')
-                  ? { backgroundColor: '#1f1f1f', color: '#fcc000', order: 1 }
-                  : plano?.name?.toUpperCase().includes('EXTRA')
-                  ? { backgroundColor: '#fcc000', color: '#1f1f1f', order: 2 }
-                  : { backgroundColor: '#ffff', color: '#1f1f1f', order: 3 }
-              }
-              onClick={() => {
-                setActiveTab(plano.id);
-              }}
+            <div
               className={
-                activeTab === plano.id ? styles.navItemActive : styles.navItem
+                activeTab === plano.id
+                  ? styles.navItemContainerActive
+                  : styles.navItemContainer
               }
             >
-              <CardTitle className={styles.cardTitle}>
-                <h2>
-                  <b>{plano?.name?.toUpperCase()}</b>
-                </h2>
-                <CardText
-                  style={
-                    plano?.name?.toUpperCase().includes('DELUXE')
-                      ? { color: '#ccc' }
-                      : { color: '#000' }
-                  }
-                  className={styles.cardText}
-                >
-                  {data[index]?.title}
-                </CardText>
-              </CardTitle>
-            </NavItem>
+              <NavItem
+                key={plano.id}
+                style={
+                  plano?.name?.toUpperCase().includes('DELUXE')
+                    ? { backgroundColor: '#1f1f1f', color: '#fcc000', order: 1 }
+                    : plano?.name?.toUpperCase().includes('EXTRA')
+                    ? { backgroundColor: '#fcc000', color: '#1f1f1f', order: 2 }
+                    : { backgroundColor: '#ffff', color: '#1f1f1f', order: 3 }
+                }
+                onClick={() => {
+                  setActiveTab(plano.id);
+                }}
+                className={styles.navItem}
+              >
+                <CardTitle className={styles.cardTitle}>
+                  <h2>
+                    <b>{plano?.name?.toUpperCase()}</b>
+                  </h2>
+                  <CardText
+                    style={
+                      plano?.name?.toUpperCase().includes('DELUXE')
+                        ? { color: '#ccc' }
+                        : { color: '#000' }
+                    }
+                    className={styles.cardText}
+                  >
+                    {data[index]?.title}
+                  </CardText>
+                </CardTitle>
+              </NavItem>
+            </div>
           ))}
         </Nav>
         <TabContent className={styles.tabContent} activeTab={activeTab}>
           {planos?.map((plano, index) => (
-            <TabPane className={styles.tabPane} tabId={plano.id}>
+            <TabPane key={plano.id} className={styles.tabPane} tabId={plano.id}>
               <Card className={styles.card}>
                 <div className={styles.descricao}>
                   <div className={styles.header}>
@@ -214,19 +227,16 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
                               item.text.toUpperCase() !==
                                 'Avaliações de jogos'.toUpperCase()
                           )
-                          .map(item => (
-                            <>
-                              {' '}
-                              <li className={styles.itemInfo}>
-                                <Image
-                                  src={item.src}
-                                  width='28px'
-                                  height={'28px'}
-                                ></Image>
+                          .map((item, index) => (
+                            <li key={index} className={styles.itemInfo}>
+                              <Image
+                                src={item.src}
+                                width='28px'
+                                height={'28px'}
+                              ></Image>
 
-                                <p>{item.text}</p>
-                              </li>
-                            </>
+                              <p>{item.text}</p>
+                            </li>
                           ))}
                       </div>
                     ) : plano?.name?.toUpperCase().includes('EXTRA') ? (
@@ -239,19 +249,16 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
                               item.text.toUpperCase() !==
                                 'Ubisoft+ Classics'.toUpperCase()
                           )
-                          .map(item => (
-                            <>
-                              {' '}
-                              <li className={styles.itemInfo}>
-                                <Image
-                                  src={item.src}
-                                  width='28px'
-                                  height={'28px'}
-                                ></Image>
+                          .map((item, index) => (
+                            <li key={index} className={styles.itemInfo}>
+                              <Image
+                                src={item.src}
+                                width='28px'
+                                height={'28px'}
+                              ></Image>
 
-                                <p>{item.text}</p>
-                              </li>
-                            </>
+                              <p>{item.text}</p>
+                            </li>
                           ))}
                       </div>
                     ) : (
@@ -266,19 +273,16 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
                               item.text.toUpperCase() !==
                                 'Descontos exclusivos'.toUpperCase()
                           )
-                          .map(item => (
-                            <>
-                              {' '}
-                              <li className={styles.itemInfo}>
-                                <Image
-                                  src={item.src}
-                                  width='28px'
-                                  height={'28px'}
-                                ></Image>
+                          .map((item, index) => (
+                            <li key={index} className={styles.itemInfo}>
+                              <Image
+                                src={item.src}
+                                width='28px'
+                                height={'28px'}
+                              ></Image>
 
-                                <p>{item.text}</p>
-                              </li>
-                            </>
+                              <p>{item.text}</p>
+                            </li>
                           ))}
                       </div>
                     )}
@@ -363,7 +367,7 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
                       }}
                       className={styles.buttonVerPlanos}
                     >
-                      <span>Assinar</span>
+                      <span>{Order?.Order[0].id ? 'Alterar' : 'Assinar'}</span>
                     </Button>
                   </div>
                 </div>

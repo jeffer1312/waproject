@@ -22,7 +22,7 @@ const SubscriberProvider: React.FC<IProps> = ({ children }) => {
 
     if (incritoStorage) {
       let incritoData = JSON.parse(incritoStorage);
-      console.log('incritoStorage', incritoData);
+
       if (incritoData !== '' || incritoData !== null) {
         setInscrito(incritoData);
       }
@@ -36,7 +36,6 @@ const SubscriberProvider: React.FC<IProps> = ({ children }) => {
   }, [inscrito]);
 
   const handleChangeInscrito = (value: TSubscriber) => {
-    console.log('ta passando:?');
     setInscrito(value);
   };
 

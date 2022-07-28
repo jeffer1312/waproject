@@ -1,9 +1,10 @@
 .tab {
   border: 0;
+  margin-bottom: -1rem;
+  background-color: #cecdd2;
+  padding-bottom: 1rem;
 }
 .navItem {
-  width: 30%;
-
   box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 9px 0px;
   border-radius: 18px !important;
   -webkit-border-radius: 18px !important;
@@ -20,12 +21,27 @@
   outline: 3px solid #fff;
   outline-offset: 1px;
 }
+.navItemContainer {
+  width: 30%;
+  /* padding: 0.08rem; */
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+
+.navItemContainerActive {
+  width: 30%;
+  background-color: #f5f7fa;
+  /* padding: 0.08rem; */
+  border-bottom: 0;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
 .navItem:hover {
   outline: 3px solid rgb(17, 104, 198);
   outline-offset: 1px;
 }
 .navItemActive {
-  width: 30%;
+  /* width: 30%; */
 
   box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 9px 0px;
   border-radius: 18px !important;
@@ -61,7 +77,8 @@
 }
 .tabContent {
   width: 80vw;
-  padding-top: 1rem;
+  border: 0;
+  border-top-left-radius: 0 !important;
 }
 .tabPane {
   width: 100%;
@@ -70,7 +87,7 @@
 .card {
   display: flex;
   flex-direction: row;
-
+  border-top: 0;
   width: 100%;
   /* height: 767px; */
   padding: 1rem;
