@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { Alert, Button, Form, InputGroup } from 'reactstrap';
+import { Alert, Button, Form, InputGroup, Spinner } from 'reactstrap';
 import styles from '../styles/Home.module.css';
 import { useForm } from 'react-hook-form';
 import { api } from '../src/services/api';
@@ -15,11 +15,12 @@ const Home: NextPage = () => {
   const [erro, setErro] = useState({ show: false, msg: '' });
   const { handleChangeInscrito } = useSubscriberContext();
   const { register, handleSubmit } = useForm();
+  const [loading, setLoading] = useState(false);
 
   const handleSaveSubscriber = async (data: any) => {
+    setLoading(true);
     const { name, email } = data;
 
-    
     if (name && email) {
       try {
         const res = await api.post(`${coRotaInscrito}`, { name, email });
@@ -29,12 +30,14 @@ const Home: NextPage = () => {
           handleChangeInscrito(data);
 
           Router.push('/Planos');
+          setLoading(false);
         }
       } catch (err) {
         //@ts-ignore
         setErro({ show: true, msg: err?.response?.data?.erro });
         //@ts-ignore
         handleChangeInscrito(err?.response?.data?.ExistSubscriber);
+        setLoading(false);
       }
     }
   };
@@ -97,14 +100,25 @@ const Home: NextPage = () => {
             >
               <span className='alert-text  ml-1'>
                 <strong>{erro.msg}</strong>
-                <Link href={'/Planos'}>Deseja Alterar Plano</Link>
+                <Link href={'/Planos'}> Deseja Alterar/Assinar Plano</Link>
               </span>
             </Alert>
           )}
 
           <div className={styles.buttonContainer}>
             <Button type='submit' className={styles.buttonCadastro}>
-              <span>Cadastrar</span>
+              {loading ? (
+                <Spinner
+                  color='white'
+                  style={{
+                    width: '1rem',
+                    height: '1rem',
+                    borderWidth: '.3rem',
+                  }}
+                />
+              ) : (
+                <span>Cadastrar</span>
+              )}
             </Button>
           </div>
         </Form>

@@ -10,6 +10,7 @@ import { coRotaInscrito, coRotaPlanos } from '../src/Constantes';
 import { useCallback, useEffect, useState } from 'react';
 import { api } from '../src/services/api';
 import { TInscritoPedido, TPlans } from '../src/types';
+import Header from '../src/components/Header';
 const Planos: NextPage = () => {
   const { inscrito } = useSubscriberContext();
   const [mostrarSectionAssinar, setMostrarSectionAssinar] = useState(false);
@@ -36,7 +37,6 @@ const Planos: NextPage = () => {
   const LoadPlanos = useCallback(async () => {
     const res = await api.get(`${coRotaPlanos}`);
     if (res.data) {
-   
       setPlanos(res.data);
     }
   }, []);
@@ -58,14 +58,7 @@ const Planos: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <header className={styles.header}>
-        {/* colocar logo da waproject  e nome e email */}
-        <Image src='/logo.svg' width={200} height={100} />
-        <div className={styles.subscriber}>
-          <h5>{`Nome:${inscrito?.name}`}</h5>
-          <h5> {`Email:${inscrito?.email}`}</h5>
-        </div>
-      </header>
+      <Header />
 
       {!mostrarSectionAssinar ? (
         <section className={styles.sectionComparar}>

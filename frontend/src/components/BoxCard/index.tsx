@@ -20,12 +20,13 @@ import {
   FormGroup,
   Input,
   Label,
+  Spinner,
 } from 'reactstrap';
 import styles from '../../../styles/boxCard.module.css';
 import { coRotaPedidos, data } from '../../Constantes';
 import { useSubscriberContext } from '../../context/Subscriber/SubscriberContext';
 import { api } from '../../services/api';
-
+import Router from 'next/router';
 import { TPlans, TInscritoPedido } from '../../types';
 
 type BoxCardProps = {
@@ -41,14 +42,17 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
   const inputRefOneMonth = React.useRef<HTMLInputElement>(null);
   const inputRefTreeMoths = React.useRef<HTMLInputElement>(null);
   const inputRefTwelveMoths = React.useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<string>(
     Order?.Order[0]?.plan?.id ? Order?.Order[0]?.plan?.id : planos[0]?.id
   );
+  console.log('oque', Order?.Order[0]?.plan?.id, planos[0]?.id);
   const [months, setMonths] = useState<number>(0);
   const { inscrito } = useSubscriberContext();
 
   const handlePostOrder = async () => {
     if (months > 0) {
+      setLoading(true);
       const order: TOrderPost = {
         months,
         planId: activeTab,
@@ -56,10 +60,20 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
       };
 
       if (Order?.Order[0]?.plan?.id) {
-        await api.put(`${coRotaPedidos}/${Order?.Order[0]?.id}`, order);
+        const res = await api.put(
+          `${coRotaPedidos}/${Order?.Order[0]?.id}`,
+          order
+        );
+        if (res.status === 200) {
+          Router.push('/AssinaturaRealizada');
+          setLoading(false);
+        }
       } else {
         const res = await api.post(coRotaPedidos, order);
-        console.log(res);
+        if (res.status === 201) {
+          Router.push('/AssinaturaRealizada');
+          setLoading(false);
+        }
       }
     } else {
       alert('Selecione um valor');
@@ -87,12 +101,28 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
     }
   }, [Order, activeTab]);
 
+  useEffect(() => {
+    if (Order?.Order[0]?.plan?.id) {
+      setActiveTab(Order?.Order[0]?.plan?.id);
+    } else {
+      setActiveTab(planos[0]?.id);
+    }
+  }, [Order, planos]);
+
   return (
     <>
       <div>
         <Nav className={styles.tab} tabs>
           {planos?.map((plano, index) => (
             <div
+              key={plano.id}
+              style={
+                plano?.name?.toUpperCase().includes('DELUXE')
+                  ? { order: 1 }
+                  : plano?.name?.toUpperCase().includes('EXTRA')
+                  ? { order: 2 }
+                  : { order: 3 }
+              }
               className={
                 activeTab === plano.id
                   ? styles.navItemContainerActive
@@ -100,13 +130,12 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
               }
             >
               <NavItem
-                key={plano.id}
                 style={
                   plano?.name?.toUpperCase().includes('DELUXE')
-                    ? { backgroundColor: '#1f1f1f', color: '#fcc000', order: 1 }
+                    ? { backgroundColor: '#1f1f1f', color: '#fcc000' }
                     : plano?.name?.toUpperCase().includes('EXTRA')
-                    ? { backgroundColor: '#fcc000', color: '#1f1f1f', order: 2 }
-                    : { backgroundColor: '#ffff', color: '#1f1f1f', order: 3 }
+                    ? { backgroundColor: '#fcc000', color: '#1f1f1f' }
+                    : { backgroundColor: '#ffff', color: '#1f1f1f' }
                 }
                 onClick={() => {
                   setActiveTab(plano.id);
@@ -360,6 +389,7 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
                       </label>
                     </div>
                   </div>
+
                   <div className={styles.buttonContainer}>
                     <Button
                       onClick={() => {
@@ -367,7 +397,20 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
                       }}
                       className={styles.buttonVerPlanos}
                     >
-                      <span>{Order?.Order[0].id ? 'Alterar' : 'Assinar'}</span>
+                      {loading ? (
+                        <Spinner
+                          color='white'
+                          style={{
+                            width: '1rem',
+                            height: '1rem',
+                            borderWidth: '.3rem',
+                          }}
+                        />
+                      ) : (
+                        <span>
+                          {Order?.Order[0]?.id ? 'Alterar' : 'Assinar'}
+                        </span>
+                      )}
                     </Button>
                   </div>
                 </div>

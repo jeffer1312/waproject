@@ -71,7 +71,7 @@ npx prisma migrate dev
 Bom, agora na mesma tela do cmd, basta iniciar o server para o projeto ser executado localmente.
 
 ```
-yarn start:dev
+yarn start
 ```
 Caso o tudo tenha ocorrido normalmente em sua máquina, ele iniciará o serviço mostrando que a port 3333 foi iniciada.
 
