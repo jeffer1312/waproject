@@ -5,7 +5,7 @@
 ## Screenshots
 
 
-<img src="https://github.com/jeffer1312/waproject/raw/master/assine.png" width="600"> <img src="https://github.com/jeffer1312/waproject/raw/master/compare.png" width="600"> 
+<img src="https://github.com/jeffer1312/waproject/raw/master/assine.png" width="500"> <img src="https://github.com/jeffer1312/waproject/raw/master/compare.png" width="500">
 ## Recursos utilizados no desenvolvimento:
 
 - Node.Js;
