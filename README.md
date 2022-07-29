@@ -53,7 +53,7 @@ Antes de instalar as dependências no projeto, você precisa já ter instalado n
 * **MYSQL**: Utilizei docker pra rodar o MYSQL
 * **Docker**: Caso não tenha, basta realizar o download [Aqui](https://www.docker.com/get-started/)
 
-_Note_:Caso nao queira utilizar docker e ja tenha instalado o banco de dados mysql troque as variaveis do arquivo .env pra conectar com o seu banco
+_Note_:Caso nao queira utilizar docker e ja tenha instalado o banco de dados mysql troque as variaveis do arquivo .env  dentro da pasta /backend pra conectar com o seu banco
 
 criar banco de dados Mysql usando docker:
 _Note_: se quiser mude MYSQL_DATABASE, MYSQL_PASSWORD, MYSQL_USER e MYSQL_ROOT_PASSWORD.
