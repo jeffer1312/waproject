@@ -87,7 +87,7 @@ yarn install
 yarn start
 ```
 
-Agora, abre a página da aplicação backend em `http://localhost:3333`. E pronto a aplicação será executada de maneira local na sua máquina.        
+A aplicação backend esta rodando em `http://localhost:3333`.       
 Agora, abre a página da aplicação frontend em `http://localhost:3000`. E pronto a aplicação será executada de maneira local na sua máquina.   
 
 
