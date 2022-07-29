@@ -2,6 +2,10 @@
 
 
 
+## Screenshots
+
+
+<img src="https://github.com/jeffer1312/waproject/raw/master/assine.png" width="350"> <img src="https://github.com/jeffer1312/waproject/raw/master/compare.png" width="350"> 
 ## Recursos utilizados no desenvolvimento:
 
 - Node.Js;

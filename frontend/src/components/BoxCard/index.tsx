@@ -83,20 +83,20 @@ const BoxCard = ({ planos, Order }: BoxCardProps) => {
   useEffect(() => {
     if (Order?.Order[0]?.months) {
       if (Order?.Order[0]?.months === 1) {
-        console.log('1');
-        console.log(inputRefOneMonth);
         //@ts-ignore
-        inputRefOneMonth.current.checked = true;
+        if (inputRefOneMonth?.current) {
+          inputRefOneMonth.current.checked = true;
+        }
       } else if (Order?.Order[0]?.months === 3) {
-        console.log('3');
-        console.log(inputRefTreeMoths);
-        //@ts-ignore
-        inputRefTreeMoths.current.checked = true;
+        if (inputRefTreeMoths?.current) {
+          //@ts-ignore
+          inputRefTreeMoths.current.checked = true;
+        }
       } else if (Order?.Order[0]?.months === 12) {
-        console.log('12');
-        console.log(inputRefTwelveMoths);
-        //@ts-ignore
-        inputRefTwelveMoths.current.checked = true;
+        if (inputRefTwelveMoths?.current) {
+          //@ts-ignore
+          inputRefTwelveMoths.current.checked = true;
+        }
       }
     }
   }, [Order, activeTab]);
